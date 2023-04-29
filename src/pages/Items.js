@@ -5,9 +5,10 @@ import { useContext } from 'react';
 import { myContext } from '../context/Context';
 import { TailSpin } from 'react-loader-spinner'
 ;
+import { FaRupeeSign } from 'react-icons/fa';
 function Items() {
 
-  const {addToCart} = useContext(myContext)
+  const {addToCart,itemQuantity, setItemQuantity} = useContext(myContext)
   console.log(useContext(myContext))
 console.log(addToCart)
   const[product, setProduct] = useState([])
@@ -17,6 +18,12 @@ console.log(addToCart)
     console.log(data)
     setProduct(data)
     setLoad(!load)
+
+    const quantity = data.reduce((obj, item) => {
+      obj[item.id] = 1;
+      return obj;
+    }, {});
+    setItemQuantity(quantity)
   }
 
   useEffect( () => {
@@ -77,7 +84,7 @@ if(load){
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded   ml-3">5.0</span>
         </div>
         <div className="flex items-center justify-between">
-            <span className="md:text-3xl font-bold text-gray-900 ">RS:{pro.price}</span>
+            <span className="md:text-3xl font-bold text-gray-900 "> Rs:{parseInt(pro.price)}</span>
             <button onClick={() => {addToCart(pro)}} className="text-white bg-blue-700 hover:bg-blue-800 e  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Add to cart</button>
         </div>
     </div>

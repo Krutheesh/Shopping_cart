@@ -5,8 +5,8 @@ import Home from './pages/Home';
 import Cart from './pages/Cart'
 import { myContext } from './context/Context';
 import Items from './pages/Items';
-import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from 'react-hot-toast';
+// import "react-toastify/dist/ReactToastify.css";
 const appRouter = createBrowserRouter([
   {
     path:'/',
@@ -30,8 +30,26 @@ function App() {
   
 const [cartItem, setCartItem] = useState([]);
 
+const [itemQuantity,setItemQuantity] = useState({})
 
 //adding items to cart
+const decr = (ele) => {
+  const update = {...itemQuantity}
+  update[ele.id]= (update[ele.id] || 0) - 1
+  if(update[ele.id]<1){
+    removeFromCart(ele)
+  }
+  setItemQuantity(update)
+
+}
+
+const incr = (ele) => {
+
+  const update = {...itemQuantity}
+  update[ele.id]= (update[ele.id] || 0) + 1
+  setItemQuantity(update)
+  
+}
 
 const addToCart = item => {
   const isAlreadyExist = cartItem.findIndex((ele) => ele.id === item.id)
@@ -40,7 +58,8 @@ const addToCart = item => {
     // toast("already exist in the cart", {
     //   type:"error"
     // });
-    toast.error(" already exist in the cart ")
+    incr(item)
+    toast.success(" added to cart again ")
     return;
   }
  
@@ -67,9 +86,9 @@ const buyNow = () => {
 
   return (
     <div>
-    <myContext.Provider value = {{addToCart,removeFromCart,buyNow,cartItem}}>
+    <myContext.Provider value = {{addToCart,removeFromCart,buyNow,cartItem,itemQuantity,setItemQuantity,incr,decr}}>
     <RouterProvider router={appRouter}/>
-    <ToastContainer />
+    <Toaster />
     </myContext.Provider>
           
       
