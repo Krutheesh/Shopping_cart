@@ -5,7 +5,7 @@ import { FaRupeeSign,FaTrash} from 'react-icons/fa'
 
 function Cart() {
   
-const {cartItem,removeFromCart,buyNow,itemQuantity,setItemQuantity,incr,decr} = useContext(myContext)
+const {cartItem,removeFromCart,itemQuantity,incr,decr} = useContext(myContext)
   console.log(cartItem)
   let amount = 0;
   cartItem.forEach(item => {

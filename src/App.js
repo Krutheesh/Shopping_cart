@@ -31,6 +31,7 @@ function App() {
 const [cartItem, setCartItem] = useState([]);
 
 const [itemQuantity,setItemQuantity] = useState({})
+console.log(itemQuantity)
 
 //adding items to cart
 const decr = (ele) => {
@@ -62,7 +63,9 @@ const addToCart = item => {
     toast.success(" added to cart again ")
     return;
   }
- 
+  const add = {...itemQuantity}
+  add[item.id]=1
+ setItemQuantity(add)
   setCartItem([...cartItem,item]);
   toast.success("item added to cart successfully")
 };
@@ -71,22 +74,17 @@ const addToCart = item => {
 
 const removeFromCart = (item) => {
   setCartItem(cartItem.filter(ele => ele.id !== item.id));
+  
 }
 
-//buy cart items
 
-const buyNow = () => {
-  setCartItem([]);
-  toast("purchased successfully",{
-    type:"success"
-  });
-}
+
 
 
 
   return (
     <div>
-    <myContext.Provider value = {{addToCart,removeFromCart,buyNow,cartItem,itemQuantity,setItemQuantity,incr,decr}}>
+    <myContext.Provider value = {{addToCart,removeFromCart,cartItem,itemQuantity,setItemQuantity,incr,decr}}>
     <RouterProvider router={appRouter}/>
     <Toaster />
     </myContext.Provider>

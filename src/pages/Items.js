@@ -5,30 +5,28 @@ import { useContext } from 'react';
 import { myContext } from '../context/Context';
 import { TailSpin } from 'react-loader-spinner'
 ;
-import { FaRupeeSign } from 'react-icons/fa';
 function Items() {
 
-  const {addToCart,itemQuantity, setItemQuantity} = useContext(myContext)
+  const {addToCart} = useContext(myContext)
   console.log(useContext(myContext))
 console.log(addToCart)
   const[product, setProduct] = useState([])
   const [ load ,setLoad] = useState(true)
   const fetchPhotos = async () => {
     const {data} = await Axios.get("https://fakestoreapi.com/products?limit=5")
-    console.log(data)
+    // console.log(data)
     setProduct(data)
     setLoad(!load)
 
-    const quantity = data.reduce((obj, item) => {
-      obj[item.id] = 1;
-      return obj;
-    }, {});
-    setItemQuantity(quantity)
+   
   }
 
   useEffect( () => {
     fetchPhotos()
   },[]);
+
+ 
+
 
 if(load){
   return(
